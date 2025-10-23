@@ -9,3 +9,78 @@
  *
  * https://refactoring.guru/es/design-patterns/chain-of-responsibility
  */
+// # cadena de responsabilidades
+
+interface Handler {
+  setNext(handler: Handler): Handler;
+
+  handle(request: string): void;
+}
+
+abstract class BaseHandler implements Handler {
+  private nextHandler?: Handler;
+
+  setNext(handler: Handler): Handler {
+    this.nextHandler = handler;
+    return handler;
+  }
+
+  handle(request: string): void {
+    if (this.nextHandler) {
+      this.nextHandler.handle(request);
+    }
+  }
+}
+
+// soporte basico
+
+class BasicSupport extends BaseHandler {
+  override handle(request: string): void {
+    if (request === "basico") {
+      console.log("Soporte basio: resovlviendo el poroblema basico");
+      return;
+    }
+
+    console.log('soporte  basico, llamando a soporte avanzado');
+    super.handle(request)
+    
+  }
+}
+
+class AdvancedSupport extends BaseHandler {
+  override handle(request: string): void {
+    if (request === "avanzado") {
+      console.log("Soporte avanzado: resovlviendo el poroblema avanzado");
+      return;
+    }
+
+    console.log('soporte  avanzado, llamando a soporte experto');
+    super.handle(request)
+    
+  }
+}
+class ExpertSupport extends BaseHandler {
+  override handle(request: string): void {
+    if (request === "experto") {
+      console.log("Soporte experto: resovlviendo el poroblema experto");
+      return;
+    }
+
+    console.log('soporte  experto, auxilioi');
+    super.handle(request)
+    
+  }
+}
+
+function main() {
+  const basicSupport = new BasicSupport()
+  const advancedSupport = new AdvancedSupport()
+  const expertSupport = new ExpertSupport()
+
+  basicSupport.setNext(advancedSupport).setNext(expertSupport)
+
+  basicSupport.handle('experto4')
+
+}
+
+main()

@@ -46,20 +46,37 @@ class Supervisor extends BaseApprover {
   // TODO: Implementar el método approveRequest si el monto es menor o igual a 1000
   // TODO: Si el monto es mayor a 1000, pasar la solicitud al siguiente aprobador
   override approveRequest(amount: number): void {
-    throw new Error('Method not implemented.');
+    if(amount <= 1000) {
+      console.log('monto aprobado por supervisor')
+      return
+    }
+
+    console.log('pasando monto al siguiente');
+    super.next(amount)
+    
   }
-}
+} 
 
 class Manager extends BaseApprover {
   //TODO: Implementar el método approveRequest si el monto es menor o igual a 5000
   // TODO: Si el monto es mayor a 5000, pasar la solicitud al siguiente aprobador
 
   override approveRequest(amount: number): void {
-    throw new Error('Method not implemented.');
+    if(amount > 1000 && amount<=5000) {
+      console.log('monto aprobado por manager', amount)
+      return
+    }
+
+    console.log('pasando monto al siguiente');
+    super.next(amount)
   }
 }
 
 class Director extends BaseApprover {
+  approveRequest(amount: number): void {
+    console.log('monto aprobado por director', amount);
+    
+  }
   // TODO: Implementar el método approveRequest si el monto
 }
 

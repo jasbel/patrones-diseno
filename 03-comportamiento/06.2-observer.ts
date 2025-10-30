@@ -14,7 +14,7 @@
  * https://refactoring.guru/es/design-patterns/observer
  */
 
-import { COLORS } from '../helpers/colors.ts';
+import { COLORS } from "../helpers/colors.ts";
 
 // Interfaz Observer
 interface Observer {
@@ -24,21 +24,21 @@ interface Observer {
 // Clase Subject - WeatherStation
 // TODO: Terminal la implementación
 class WeatherStation {
-  // observers = [];
-  // weatherData = 'Soleado';
+  observers: Observer[] = [];
+  weatherData = "Soleado";
 
   // Agregar un Observer
   subscribe(observer: Observer): void {
+    this.observers.push(observer);
+    observer.update(this.weatherData)
     // TODO: añadir observer
 
-    console.log(
-      '%cNueva aplicación suscrita al sistema meteorológico.',
-      COLORS.green
-    );
+    console.log("%cNueva aplicación suscrita al sistema meteorológico.", COLORS.green);
   }
 
   // Eliminar un Observer
   unsubscribe(observer: Observer): void {
+    this.observers = this.observers.filter((it) => it !== observer);
     // TODO: eliminar observer
 
     console.log(`%cUna aplicación se ha dado de baja`, COLORS.red);
@@ -46,7 +46,9 @@ class WeatherStation {
 
   // Actualizar el clima y notificar a todos los Observers
   setWeather(weatherData: string): void {
+    this.weatherData = weatherData
     console.log(`\nClima actualizado: %c${weatherData}`, COLORS.blue);
+    this.notifyObservers()
 
     // TODO: actualizar clima y notificar a todos los Observers con el método notifyObservers
   }
@@ -54,7 +56,7 @@ class WeatherStation {
   // Notificar a todos los Observers
   private notifyObservers(): void {
     // TODO: implementar método
-    throw new Error('Method not implemented.');
+    this.observers.forEach(it => it.update(this.weatherData))
   }
 }
 
@@ -82,24 +84,24 @@ function main(): void {
   const weatherStation = new WeatherStation();
 
   // Crear aplicaciones
-  const flutterWeatherApp = new WeatherApp('Flutter WeatherApp');
-  const reactNativeWeatherApp = new WeatherApp('React Native WeatherApp');
-  const weatherTrackerApp = new WeatherApp('Weather Tracker App');
+  const flutterWeatherApp = new WeatherApp("Flutter WeatherApp");
+  const reactNativeWeatherApp = new WeatherApp("React Native WeatherApp");
+  const weatherTrackerApp = new WeatherApp("Weather Tracker App");
 
   // Suscribir aplicaciones a la estación meteorológica
   weatherStation.subscribe(flutterWeatherApp);
   weatherStation.subscribe(reactNativeWeatherApp);
 
   // Actualizar el clima
-  weatherStation.setWeather('Lluvioso');
+  weatherStation.setWeather("Lluvioso");
 
   // Agregar una nueva aplicación
   weatherStation.subscribe(weatherTrackerApp);
-  weatherStation.setWeather('Nublado');
+  weatherStation.setWeather("Nublado");
 
   // Una aplicación se da de baja
   weatherStation.unsubscribe(reactNativeWeatherApp);
-  weatherStation.setWeather('Tormenta eléctrica');
+  weatherStation.setWeather("Tormenta eléctrica");
 }
 
 main();

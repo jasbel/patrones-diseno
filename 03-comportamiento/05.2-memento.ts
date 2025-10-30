@@ -44,8 +44,8 @@ class DrawingBoard {
 
   // Crear un Memento del estado actual de la pizarra
   save(): DrawingMemento {
-    // TODO: Implementar el método save para guardar el estado actual
-    throw new Error('Method not implemented.');
+    const memento = new DrawingMemento(this.shapes)
+    return memento
   }
 
   // Restaurar el estado de la pizarra desde un Memento
@@ -62,13 +62,16 @@ class History {
   // Guardar un Memento
   // TODO: Implementar push para guardar en la historia
   push(memento: DrawingMemento): void {
-    throw new Error('Method not implemented.');
+    this.mementos.push(memento)
+    console.log('agregano nuevo memento');
+    
   }
 
   // Recuperar el último Memento
   // TODO: Implementar pop para recuperar el último memento
   pop(): DrawingMemento | undefined {
-    throw new Error('Method not implemented.');
+    console.log('recuperando ultimo memento');
+    return this.mementos.pop()
   }
 }
 

@@ -8,3 +8,23 @@
  *
  * https://refactoring.guru/es/design-patterns/flyweight
  */
+
+interface iLocation {
+  display(coor: {x: number, y: number}): void;
+}
+
+class LocationIcon implements iLocation {
+  private type: string;
+  private iconImage: string
+
+  constructor(type: string, iconImage: string){
+    this.type = type
+    this.iconImage = iconImage
+  }
+
+  display(coordinates: {x: number, y: number}): void {}
+}
+
+class LocationFactory {
+  getLocationIcon
+}

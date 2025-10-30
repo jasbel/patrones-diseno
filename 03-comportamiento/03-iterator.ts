@@ -46,7 +46,7 @@ class PokemonCollection {
   //TODO:
 
   createIterator() {
-    // throw
+    return new PokemonIterator(this)
   }
 }
 
@@ -72,3 +72,28 @@ class PokemonIterator implements IIterator<Pokemon> {
     return this.collection.getPokemonAt(this.position);
   }
 }
+
+
+function main() {
+  const pokedex = new PokemonCollection()
+
+  pokedex.addPokemon(new Pokemon("uno","auno"))
+  pokedex.addPokemon(new Pokemon("afsd","dfghdf"))
+  pokedex.addPokemon(new Pokemon("dfg","dfghf"))
+  pokedex.addPokemon(new Pokemon("ghjf","fgjgfdgh"))
+  pokedex.addPokemon(new Pokemon("asdasd","aunddfgho"))
+  pokedex.addPokemon(new Pokemon("asdf","dfghdfg"))
+
+  const iterator = pokedex.createIterator()
+
+  while(iterator.hasNext()) {
+    const poke = iterator.next()
+
+    if(poke) {
+      console.log(`poke: ${poke.name}, tipo: ${poke.type}`);
+      
+    }
+  }
+}
+
+main()
